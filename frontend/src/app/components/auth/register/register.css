@@ -1,0 +1,62 @@
+/* Stijl voor de registratie-container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 64px;
+}
+
+.register-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Stijl voor de inhoud van de mat-card */
+mat-card-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-card-title {
+    margin-bottom: 2rem;
+}
+
+/* Stijl voor het formulier */
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Stijl voor de mat-form-fields: centreer en beperk de breedte */
+mat-form-field {
+  width: 80%; /* Beperk de breedte van de invulvelden */
+}
+
+/* Stijl voor de knop */
+button[type="submit"] {
+  width: 80%; /* Zelfde breedte als de invulvelden */
+  margin-top: 1rem;
+}
+
+/* Stijl voor de link */
+a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}

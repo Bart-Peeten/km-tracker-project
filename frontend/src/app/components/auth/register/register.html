@@ -1,0 +1,67 @@
+<app-toolbar></app-toolbar>
+
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>Registreren</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Naam veld -->
+        <mat-form-field appearance="fill">
+          <mat-label>Volledige naam</mat-label>
+          <input matInput formControlName="name" required>
+          @if (registerForm.get('name')?.hasError('required')) {
+            <mat-error>Naam is verplicht</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- E-mail veld -->
+        <mat-form-field appearance="fill">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" type="email" required>
+          @if (registerForm.get('email')?.hasError('required')) {
+            <mat-error>E-mail is verplicht</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('email')) {
+            <mat-error>Voer een geldige e-mail in</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Wachtwoord veld -->
+        <mat-form-field appearance="fill">
+          <mat-label>Wachtwoord</mat-label>
+          <input matInput formControlName="password" type="password" required>
+          @if (registerForm.get('password')?.hasError('required')) {
+            <mat-error>Wachtwoord is verplicht</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('minlength')) {
+            <mat-error>Wachtwoord moet minimaal 6 tekens bevatten</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Wachtwoord bevestigen veld -->
+        <mat-form-field appearance="fill">
+          <mat-label>Bevestig wachtwoord</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" required>
+          @if (registerForm.get('confirmPassword')?.hasError('required')) {
+            <mat-error>Bevestig je wachtwoord</mat-error>
+          }
+          @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+            <mat-error>Wachtwoorden komen niet overeen</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Registreer-knop -->
+        <button mat-raised-button color="primary" type="submit" style="width: 100%; margin-top: 1rem;">
+          Registreren
+        </button>
+      </form>
+
+      <!-- Link terug naar login -->
+      <div style="margin-top: 1rem; text-align: center;">
+        <p>Heb je al een account? <a routerLink="/login" routerLinkActive="active-link">Log hier in</a></p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
