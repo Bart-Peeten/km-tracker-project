@@ -1,6 +1,8 @@
 package be.appelicious.kmtrackerbackend.infrastructure.repository;
 
+import be.appelicious.kmtrackerbackend.domain.model.User;
 import be.appelicious.kmtrackerbackend.domain.repository.UserRepository;
+import be.appelicious.kmtrackerbackend.infrastructure.enity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
@@ -12,7 +14,7 @@ public class JpaUserRepositoryAdapter implements UserRepository {
 
     @Override
     public User save(User user) {
-        UserEntity entity = new UserEntity(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
+        UserEntity entity = new UserEntity(user);
         UserEntity savedEntity = springDataUserRepository.save(entity);
         return savedEntity.toDomain();
     }
