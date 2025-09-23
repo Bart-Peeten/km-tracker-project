@@ -42,6 +42,7 @@
             "polyfills": [
               "zone.js"
             ],
+            "outputPath": "dist/km-tracker",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {

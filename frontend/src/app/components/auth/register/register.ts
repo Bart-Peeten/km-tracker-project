@@ -24,7 +24,7 @@ import { Toolbar } from "../../km/shared/toolbar/toolbar";
     Toolbar
 ],
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  styleUrls: ['./register.css']
 })
 export class Register {
 registerForm: FormGroup;
