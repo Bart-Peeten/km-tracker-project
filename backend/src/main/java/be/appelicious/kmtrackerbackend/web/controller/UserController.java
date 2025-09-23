@@ -1,6 +1,6 @@
 package be.appelicious.kmtrackerbackend.web.controller;
 
-import be.appelicious.kmtrackerbackend.infrastructure.security.SecurityUser;
+import be.appelicious.kmtrackerbackend.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/current")
-    public ResponseEntity<String> getCurrentUser(@AuthenticationPrincipal SecurityUser securityUser) {
-        return ResponseEntity.ok(securityUser.getUsername());
+    public ResponseEntity<String> getCurrentUser(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(user.getUsername());
     }
 }
