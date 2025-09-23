@@ -1,4 +1,4 @@
-package be.appelicious.kmtrackerbackend.application.service;
+package be.appelicious.kmtrackerbackend.application.service.impl;
 
 import be.appelicious.kmtrackerbackend.application.dto.RegisterRequest;
 import be.appelicious.kmtrackerbackend.domain.model.User;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class DefaultUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
