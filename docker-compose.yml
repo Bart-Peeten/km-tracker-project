@@ -1,0 +1,63 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: km-tracker-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - kmtracker-net
+
+  # frontend:
+  #   image: node:20
+  #   container_name: km-tracker-frontend
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app     
+  #     - /app/node_modules   
+  #   command: ng serve --host 0.0.0.0 --port 4200 --disable-host-check    
+  #   ports:
+  #     - "4200:4200"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - kmtracker-net
+
+  backend:
+    build: ./backend
+    container_name: km-tracker-backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://km-tracker-db:5432/kmtracker
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8080:8080"
+      - "5005:5005"   # debug poort
+    depends_on:
+      - km-tracker-db
+    networks:
+      - kmtracker-net
+
+  km-tracker-db:
+    image: postgres:15
+    container_name: km-tracker-db
+    environment:
+      - POSTGRES_DB=kmtracker
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - kmtracker-net
+
+volumes:
+  postgres_data:
+
+networks:
+  kmtracker-net:
+    driver: bridge

@@ -1,0 +1,43 @@
+mat-toolbar, app-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Belangrijk: geef de body en html 100% hoogte */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* De hoofdcontainer moet minstens het scherm vullen */
+.page-content {
+  padding-top: 80px; /* hoogte van toolbar */
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: calc(100% - 64px); /* ✨ belangrijk! */
+  box-sizing: border-box;
+}
+
+/* Laat de grid de resterende ruimte gebruiken */
+app-data-grid {
+  flex: 1;
+  display: block;
+  min-height: 400px; /* voor zekerheid */
+}
+
+/* mobiel */
+@media (max-width: 599px) {
+  .page-content {
+    padding-top: 56px;
+    width: 100%;
+    margin: 0;
+    height: calc(100% - 56px);
+  }
+}
