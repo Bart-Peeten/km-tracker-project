@@ -9,7 +9,7 @@
     "build-prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
-},
+  },
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
@@ -32,6 +32,8 @@
     "@angular/material": "^20.2.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
+    "ag-grid-angular": "^34.2.0",
+    "ag-grid-community": "^34.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

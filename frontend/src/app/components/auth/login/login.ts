@@ -8,6 +8,7 @@ import { NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Toolbar } from '../../km/shared/toolbar/toolbar';
+import { LoginService } from '../../../services/login/login-service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ import { Toolbar } from '../../km/shared/toolbar/toolbar';
 export class Login {
   loginForm: FormGroup;
 
-  constructor(private readonly fb: FormBuilder, private readonly router:Router) {
+  constructor(private readonly fb: FormBuilder, private readonly router: Router, private loginService: LoginService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -39,9 +40,17 @@ export class Login {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Login gegevens:', this.loginForm.value);
-      this.router.navigate(['/dashboard']);
-      // Hier kun je je login-logica implementeren
+      const { email, password } = this.loginForm.value;
+      this.loginService.login(email, password).subscribe({
+        next: (response) => {
+          console.log('JWT received:', response.token);
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Login error:', err);
+        }
+      });
     }
   }
 

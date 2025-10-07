@@ -6,8 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Toolbar } from "../../km/shared/toolbar/toolbar";
+import { RegisterService, RegisterRequest } from '../../../services/register/register-service';
 
 @Component({
   selector: 'app-register',
@@ -22,14 +23,14 @@ import { Toolbar } from "../../km/shared/toolbar/toolbar";
     RouterLink,
     RouterLinkActive,
     Toolbar
-],
+  ],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })
 export class Register {
-registerForm: FormGroup;
+  registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private registerService: RegisterService, private readonly router: Router) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -46,9 +47,24 @@ registerForm: FormGroup;
   };
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      console.log('Registratiegegevens:', this.registerForm.value);
-      // Hier kun je je registratielogica implementeren
+    if (this.registerForm.invalid) {
+      return;
     }
+
+    const request: RegisterRequest = {
+      username: this.registerForm.value.name,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password
+    };
+
+    this.registerService.register(request).subscribe({
+      next: () => {
+        console.log('Registratie succesvol!');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Registratie mislukt:', err);
+      }
+    });
   }
 }
