@@ -8,3 +8,25 @@ mat-toolbar {
   z-index: 100;
   background-color: lightblue;
 }
+
+.km-toolbar {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.adminButton {
+  font-size: 15px;
+  background-color: lightblue;
+  border: none;
+}

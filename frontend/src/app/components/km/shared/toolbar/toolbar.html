@@ -1,3 +1,12 @@
-<mat-toolbar color="primary">
-    <span>{{appTitle}}</span>
+<mat-toolbar color="primary" class="km-toolbar">
+    <span class="title">{{appTitle}}</span>
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="!isAdminRoute">
+        <button mat-button (click)="navigateToAdmin()">Admin</button>
+    </ng-container>
+
+    <ng-container *ngIf="isAdminRoute">
+        <button mat-button (click)="navigateToHome()">Home</button>
+    </ng-container>
 </mat-toolbar>
