@@ -1,0 +1,36 @@
+<app-toolbar></app-toolbar>
+
+<!-- gebruik admin-specifieke container klasse om conflicten te voorkomen -->
+<div class="admin-grid-container">
+
+    <div class="grid-container">
+
+        <!-- 🧾 Formulier -->
+        <div class="form-section">
+            <h3>Nieuwe rit toevoegen</h3>
+            <form (ngSubmit)="addRow()" #form="ngForm" class="form-fields">
+                <input type="text" name="destination" [(ngModel)]="newDestination" placeholder="Bestemming" required />
+                <input type="text" name="distance" [(ngModel)]="newDistance" placeholder="Afstand" required />
+                <button type="submit">Toevoegen</button>
+            </form>
+        </div>
+
+        <!-- 📆 Maandfilter -->
+        <div class="filter-section">
+            <label for="month">Filter op maand:</label>
+            <input type="month" id="month" [(ngModel)]="selectedMonth" name="selectedMonth"
+                (change)="filterByMonth()" />
+        </div>
+
+        <!-- 📅 Huidige maand label -->
+        <div class="current-month" *ngIf="displayMonth">
+            <h4>📅 Getoonde maand: {{ displayMonth }}</h4>
+        </div>
+
+        <!-- 📊 Grid -->
+        <ag-grid-angular [rowData]="filteredData" [columnDefs]="colDefs" [defaultColDef]="defaultColDef"
+            class="ag-theme-alpine"></ag-grid-angular>
+
+    </div>
+
+</div>

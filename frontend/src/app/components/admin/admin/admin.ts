@@ -4,40 +4,39 @@ import { AgGridAngular } from "ag-grid-angular";
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { FormsModule } from '@angular/forms';
-
-ModuleRegistry.registerModules([AllCommunityModule]);
+import { Toolbar } from '../../km/shared/toolbar/toolbar';
 
 interface IRow {
-  datum: string;         // voor weergave in grid
+  distance: string;
   destination: string;
-  rawDate: Date;          // voor filtering
 }
 
 @Component({
-  selector: 'app-data-grid',
-  imports: [AgGridAngular, FormsModule, CommonModule],
-  styleUrls: ['./data-grid.css'],
-  templateUrl: './data-grid.html'
+  selector: 'app-admin',
+  imports: [AgGridAngular, FormsModule, CommonModule, Toolbar],
+  templateUrl: './admin.html',
+  styleUrl: './admin.css'
 })
-export class DataGrid {
+export class Admin {
+
   // Data
   rowData: IRow[] = [
-    { datum: "08/10/2025", destination: "Dr Sliwinski", rawDate: new Date(2025, 9, 8) },
-    { datum: "10/10/2025", destination: "Pony club", rawDate: new Date(2025, 9, 10) },
-    { datum: "12/10/2025", destination: "Spelen Catalya", rawDate: new Date(2025, 9, 12) },
+    { destination: "Dr Sliwinski", distance: "20km" },
+    { destination: "Pony club", distance: "5km" },
+    { destination: "Spelen Catalya", distance: "35km" },
   ];
 
   filteredData: IRow[] = [...this.rowData];
 
   colDefs: ColDef<IRow>[] = [
-    { field: "datum", headerName: "Datum" },
     { field: "destination", headerName: "Bestemming" },
+    { field: "distance", headerName: "Afstand" },
   ];
 
   defaultColDef: ColDef = { flex: 1 };
 
   // Form velden
-  newDatum: string = ''; // gebonden aan <input type="date">
+  newDistance: string = '';
   newDestination: string = '';
 
   // Maandfilter
@@ -45,15 +44,10 @@ export class DataGrid {
   displayMonth: string = '';
 
   addRow() {
-    if (!this.newDatum || !this.newDestination) return;
+    if (!this.newDistance || !this.newDestination) return;
 
-    const dateObj = new Date(this.newDatum); // input type="date" geeft YYYY-MM-DD
-    const formatted = `${String(dateObj.getDate()).padStart(2, '0')}/` +
-      `${String(dateObj.getMonth() + 1).padStart(2, '0')}/` +
-      `${dateObj.getFullYear()}`;
-
-    this.rowData.push({ datum: formatted, destination: this.newDestination, rawDate: dateObj });
-    this.newDatum = '';
+    this.rowData.push({ distance: this.newDistance, destination: this.newDestination });
+    this.newDistance = '';
     this.newDestination = '';
     this.filterByMonth();
   }
@@ -69,14 +63,11 @@ export class DataGrid {
     const year = Number(yearStr);
     const month = Number(monthStr);
 
-    this.filteredData = this.rowData.filter(row => {
-      return row.rawDate.getFullYear() === year && (row.rawDate.getMonth() + 1) === month;
-    });
-
     const monthNames = [
       'Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni',
       'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'
     ];
     this.displayMonth = `${monthNames[month - 1]} ${year}`;
   }
+
 }
